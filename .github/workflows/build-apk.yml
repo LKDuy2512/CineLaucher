@@ -28,7 +28,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Your repo only holds this workflow, so the app's source is fetched from the original project.
       - uses: actions/checkout@v4
+        with:
+          repository: simbasjungles/free-my-tv
 
       - uses: actions/setup-java@v4
         with:
@@ -81,7 +84,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "apk-${{ github.run_number }}" FreeMyTV.apk \
+          gh release create "apk-${{ github.run_number }}" FreeMyTV.apk --repo "${{ github.repository }}" \
             --title "Free My TV (build ${{ github.run_number }})" \
             --notes "Built by GitHub Actions." --latest
-            
